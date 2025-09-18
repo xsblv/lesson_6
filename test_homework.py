@@ -1,5 +1,5 @@
 from datetime import time
-
+import functools
 
 def test_dark_theme_by_time():
     """
@@ -82,28 +82,34 @@ def test_find_suitable_user():
 # "Open Browser [Chrome]"
 
 
+
+
 def test_readable_function():
     open_browser(browser_name="Chrome")
     go_to_companyname_homepage(page_url="https://companyname.com")
     find_registration_button_on_login_page(page_url="https://companyname.com/login", button_text="Register")
 
+def format_function_name(func, *args):
+    function_name = func.__name__.replace("_", " ").title()
+    args_name = ", ".join([*args])
+    print(f"{function_name} [{args_name}]")
+    return f"{function_name} [{args_name}]"
+
 
 def open_browser(browser_name):
-    actual_result = None
-    actual_result = (open_browser.__name__.replace('_', ' ').title()+ ' ' + "[{}]".format(browser_name))
+    actual_result = format_function_name(open_browser, browser_name)
+
     print(actual_result)
     assert actual_result == "Open Browser [Chrome]"
 
 
 def go_to_companyname_homepage(page_url):
-    actual_result = None
-    actual_result = (go_to_companyname_homepage.__name__.replace('_', ' ').title() + ' ' + "[{}]".format(page_url))
-    print(actual_result)
+    actual_result = format_function_name(go_to_companyname_homepage, page_url)
+
     assert actual_result == "Go To Companyname Homepage [https://companyname.com]"
 
 
 def find_registration_button_on_login_page(page_url, button_text):
-    actual_result = None
-    actual_result = (find_registration_button_on_login_page.__name__.replace('_', ' ').title()+ ' ' + "[{}".format(page_url) + ', ' + "{}]".format(button_text))
-    print(actual_result)
+    actual_result = format_function_name(find_registration_button_on_login_page, page_url, button_text)
+
     assert actual_result == "Find Registration Button On Login Page [https://companyname.com/login, Register]"
